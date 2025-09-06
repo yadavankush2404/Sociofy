@@ -7,8 +7,8 @@ from .tasks import CaptionTask, KeywordTask
 
 def build_crew():
     # Bind agents to tasks dynamically to keep tasks reusable
-    caption_task = CaptionTask.copy(update={"agent": Content_Strategist_Agent})
-    keyword_task = KeywordTask.copy(update={"agent": Image_Search_Agent})
+    caption_task = CaptionTask.model_copy(update={"agent": Content_Strategist_Agent})
+    keyword_task = KeywordTask.model_copy(update={"agent": Image_Search_Agent})
 
     return Crew(
         agents=[Content_Strategist_Agent, Image_Search_Agent],

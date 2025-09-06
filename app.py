@@ -138,11 +138,11 @@ from services.db import save_post, list_posts
 
 # --- Page Config & Initialization ---
 load_dotenv()
-st.set_page_config(page_title="CrewAI Social Post", page_icon="📣", layout="wide")
+st.set_page_config(page_title="Sociofy", page_icon="📣", layout="wide")
 
 # --- Sidebar ---
 with st.sidebar:
-    st.title("📣 CrewAI Social Post")
+    st.title("📣 AI Agent at work")
     st.caption("Generate platform-ready captions + royalty-free images.")
     
     st.header("Settings")
@@ -152,7 +152,7 @@ with st.sidebar:
     # The image slider was removed as the logic only ever fetched one "best" image.
 
 # --- Main Page ---
-st.title("AI Social Post Generator")
+st.title("Sociofy")
 
 # Use a form to prevent reruns on every widget change
 with st.form(key="post_form"):
@@ -177,7 +177,7 @@ if generate_btn and topic.strip():
         result = crew.kickoff(inputs=inputs)
         
         # The result from the crew should be a single, finalized string.
-        caption_text = result
+        caption_text = result.tasks_output[0].raw
 
         # 2. ENFORCE PLATFORM LIMITS
         caption_text = enforce_platform_limit(caption_text, platform)
@@ -205,7 +205,7 @@ if generate_btn and topic.strip():
         with right:
             st.subheader("🖼️ Image Preview")
             if best_image:
-                st.image(best_image.url, use_column_width=True, caption=(best_image.alt_description or ""))
+                st.image(best_image.url, use_container_width=True, caption=(best_image.alt_description or ""))
                 image_url = best_image.url
                 credit = best_image.author or ""
                 if credit:
@@ -259,7 +259,7 @@ with st.expander("🕘 View Recent Posts"):
             st.markdown(f"**[{p.platform.upper()}]** {p.topic}")
             st.text_area("", value=p.caption, height=150, key=f"caption_{p.id}", disabled=True)
             if p.image_url:
-                st.image(p.image_url, use_column_width=True)
+                st.image(p.image_url, use_container_width=True)
             st.caption(f"Generated on {p.created_at:%Y-%m-%d %H:%M}")
             st.divider()
     else:

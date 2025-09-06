@@ -28,7 +28,7 @@ class Post(Base):
 Base.metadata.create_all(bind=engine)
 
 
-def save_post(topic: str, platform: str, tone: str, caption: str, image_url: str) -> int:
+def save_post(topic: str, caption: str, image_url: str, platform: str, tone: str) -> int:
     with SessionLocal() as s:
         p = Post(topic=topic, platform=platform, tone=tone, caption=caption, image_url=image_url)
         s.add(p)
