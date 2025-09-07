@@ -20,9 +20,15 @@ CaptionTask = Task(
     )
 
 KeywordTask = Task(
-    description= "Give comma-separated keywords extracted from the result of CaptionTask agent generated caption, extract image keywords. Return ONLY comma-separated keywords.", # adding {caption} in description and then adding context to captionTask agent did not work why?
+     #description= "Give comma-separated keywords extracted from the result of CaptionTask agent generated caption, extract image keywords. Return ONLY comma-separated keywords.", # adding {caption} in description and then adding context to captionTask agent did not work why?
+     #"Analyze the {platform} caption generated in the context from the previous task CaptionTask.\n\n "
+     description = (  "Using the caption output generated from the previous task for {platform} platform\n\n "
+                     "Based *only* on that caption, extract 5-7 relevant keywords that would be perfect for finding a matching image. "
+                     "Focus on the main themes."
+                     "Return ONLY a comma-separated list of keywords."
+                ),
     expected_output="Comma-separated keywords, 4-8 items.",
     agent=None, # set by crew assembly
     async_execution=False,
-    context = [CaptionTask]
+    context = None # set by crew assembly
     )

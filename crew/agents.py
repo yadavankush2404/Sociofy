@@ -16,12 +16,20 @@ Content_Strategist_Agent = Agent(
     backstory= "You are a senior social media copywriter. You know tone, hooks, CTA, emoji etiquette, and platform limits (Twitter 280, Instagram 2200, LinkedIn 3000).",
     allow_delegation=False,
     llm=llm,
+    verbose=True
 )
 
 Image_Search_Agent = Agent(
     role="Image Researcher",
-    goal="Extract key visual themes from the caption and find a relevant, high-quality, royalty-free image on Unsplash.",
-    backstory="You are a creative researcher with an eye for compelling, brand-safe visuals.",
+    goal="Extract key themes and subjects from caption text to generate relevant image search keywords.",
+    # backstory="You are a creative researcher with an eye for compelling, brand-safe visuals. Skilled at identifying the core themes of a text.",
+    backstory=(
+        'You are an AI expert in Natural Language Processing. '
+        'Your primary skill is to meticulously analyze any given text, '
+        'disregard any prior knowledge, and identify the most crucial and literal '
+        'keywords that would be used to find a visually matching image.'
+    ),
     allow_delegation=False,
     llm=llm,
+    verbose=True
 )

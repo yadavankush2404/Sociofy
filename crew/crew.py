@@ -8,11 +8,15 @@ from .tasks import CaptionTask, KeywordTask
 def build_crew():
     # Bind agents to tasks dynamically to keep tasks reusable
     caption_task = CaptionTask.model_copy(update={"agent": Content_Strategist_Agent})
-    keyword_task = KeywordTask.model_copy(update={"agent": Image_Search_Agent})
+    keyword_task = KeywordTask.model_copy(update={
+                                        "agent": Image_Search_Agent,
+                                        'context': [caption_task]
+                                    })
 
     return Crew(
         agents=[Content_Strategist_Agent, Image_Search_Agent],
         tasks=[caption_task, keyword_task],
-        process=Process.sequential,
-        verbose=False,
+        process="sequential",
+        output_log_file="logs/logs.json",
+        verbose=True,
     )
